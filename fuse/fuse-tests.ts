@@ -71,3 +71,36 @@ function test_fuse_deep_key_search() {
 	var f = new Fuse(books, options);
 	var result = f.search('brwn');
 }
+
+interface DataItem {
+	id: number;
+	title: string;
+	author: {
+		firstName: string;
+		lastName: string;
+	};
+}
+
+function test_fuse_generic_constructor() {
+	var books: Array<DataItem> = [{
+		id: 1,
+		title: 'The Great Gatsby',
+		author: {
+			firstName: 'F. Scott',
+			lastName: 'Fitzgerald'
+		}
+	}, {
+		id: 2,
+		title: 'The DaVinci Code',
+		author: {
+			firstName: 'Dan',
+			lastName: 'Brown'
+		}
+	}];
+	var options = {
+		keys: ['author.firstName']
+	}
+	var f = new Fuse<DataItem>(books, options);
+	var result = f.search('brwn');
+
+}
